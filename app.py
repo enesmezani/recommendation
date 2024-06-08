@@ -63,9 +63,17 @@ def recommend(title, data, similarity_matrix):
     index = data[data['title'] == title].index[0]
     distance = sorted(list(enumerate(similarity_matrix[index])), reverse=True, key=lambda vector: vector[1])
     recommendations = []
-    for i in distance[1:10]:
+    for i in distance[1:8]:
         recommendations.append(data.iloc[i[0]].title)
     return recommendations
+
+# Define a function to explain the recommendations
+def explain_recommendations(title, data):
+    if title not in data['title'].values:
+        return "Explanation not available: Movie not found."
+    movie_info = data[data['title'] == title].iloc[0]
+    explanation = f"This movie is recommended because it shares similarities with '{title}' in terms of its genre and plot overview."
+    return explanation
 
 @app.route('/')
 def home():
@@ -75,7 +83,8 @@ def home():
 def recommend_movies():
     movie_title = request.form['movie_title']
     recommendations = recommend(movie_title, movies, similarity)
-    return render_template('index.html', recommendations=recommendations)
+    explanation = explain_recommendations(movie_title, movies)
+    return render_template('index.html', recommendations=recommendations, explanation=explanation)
 
 if __name__ == '__main__':
     app.run(debug=True)
