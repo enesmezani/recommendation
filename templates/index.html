@@ -1,101 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Movie Recommendation System</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                font-family: Roboto, Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                background-color: #fff;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <title>Movie Recommendation System</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-        }
+            .container {
+                width: 100%;
+                min-height: 100dvh;
+                max-width: 800px;
+                border-left: 1px solid black;
+                border-right: 1px solid black;
+                margin: auto;
+                padding: 20px 40px;
+                background-color: #fff;
+            }
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-        }
+            form {
+                display: flex;
+                flex-direction: column;
+                row-gap: 20px;
+            }
 
-        h1 {
-            text-align: center;
-        }
+            label,
+            input {
+                font-size: 16px;
+            }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+            input {
+                padding: 10px;
+                border-radius: 8px;
+                width: 100%;
+            }
 
-        label,
-        input {
-            font-size: 25px;
-        }
+            button {
+                padding: 10px 20px;
+                font-size: 1em;
+                cursor: pointer;
+                background-color: blue;
+                color: white;
+                border: none;
+                border-radius: 5px;
+            }
 
-        input {
-            margin: 10px;
-            padding: 5px;
-            width: 60%;
-        }
+            h2,
+            p {
+                margin: 0;
+            }
 
-        button {
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            background-color: blue;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+            h1 {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
 
-        li {
-            margin: 5px;
-            font-size: 1.2em;
-        }
+            li {
+                margin: 5px;
+                font-size: 1.2em;
+            }
 
-        .movies {
-            margin-left: 19%;
-        }
+            .movies {
+                margin-left: 19%;
+            }
 
-        .recommendations {
-            text-align: center;
-        }
-    </style>
-</head>
+            .input-container {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                row-gap: 5px;
+            }
 
-<body>
-    <div class="container">
-        <h1>Movie Recommendation System</h1>
-        <form action="/recommend" method="post">
-            <label for="movie_title">Enter a movie title:</label>
-            <input type="text" id="movie_title" name="movie_title" required>
-            <button type="submit">Get Recommendations</button>
-        </form>
-        <div class="recommendations">
-            {% if recommendations %}
-            <h2>Recommended Movies:</h2>
-            <ul>
-                {% for movie in recommendations %}
-                <li>{{ movie }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
+            .recommendations {
+                margin-top: 40px;
+                border: 2px solid black;
+                border-radius: 16px;
+                padding: 10px 20px;
+                background-color: aliceblue;
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+            }
+            .explanation {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                margin-top: 30px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>
+                <img width="40" height="40" src={{ url_for('static', filename='book.png') }}>
+                Movie Recommendation System
+            </h1>
+            <form action="/recommend" method="post">
+                <div class="input-container">
+                    <label for="movie_title">Enter a movie title:</label>
+                    <input
+                        type="text"
+                        id="movie_title"
+                        name="movie_title"
+                        required
+                    />
+                </div>
+                <button type="submit">Get Recommendations</button>
+            </form>
+            <div class="recommendations">
+                {% if recommendations %}
+                <h2>Recommended Movies:</h2>
+                <ul>
+                    {% for movie in recommendations %}
+                    <li>{{ movie }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="explanation">
+                {% if explanation %}
+                <h2>Explanation:</h2>
+                <p>{{ explanation }}</p>
+                {% endif %}
+            </div>
         </div>
-        <div class="explanation">
-            {% if explanation %}
-            <h2>Explanation:</h2>
-            <p>{{ explanation }}</p>
-            {% endif %}
-        </div>
-    </div>
-</body>
-
+    </body>
 </html>
