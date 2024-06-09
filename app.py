@@ -61,7 +61,8 @@ def recommend(title, data, similarity_matrix):
     if title not in data['title'].values:
         return ["Movie not found."]
     index = data[data['title'] == title].index[0]
-    distance = sorted(list(enumerate(similarity_matrix[index])), reverse=True, key=lambda vector: vector[1])
+    distance = sorted(list(enumerate(similarity_matrix[index])), reverse=True,
+                       key=lambda vector: vector[1])
     recommendations = []
     for i in distance[1:8]:
         recommendations.append(data.iloc[i[0]].title)
@@ -72,7 +73,7 @@ def explain_recommendations(title, data):
     if title not in data['title'].values:
         return "Explanation not available: Movie not found."
     movie_info = data[data['title'] == title].iloc[0]
-    explanation = f"This movie is recommended because it shares similarities with '{title}' in terms of its genre and plot overview."
+    explanation = f"These movies are recommended because they shares similarities with '{title}' in terms of its genre and plot overview."
     return explanation
 
 @app.route('/')
