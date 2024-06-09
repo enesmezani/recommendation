@@ -70,8 +70,12 @@
 
             h1 {
                 display: flex;
-                align-items: center;
+                align-items: baseline;
                 gap: 10px;
+            }
+
+            img {
+                display: block;
             }
 
             li {
@@ -106,15 +110,21 @@
                 gap: 5px;
                 margin-top: 30px;
             }
+            .title-container {
+                display: flex;
+                align-items: baseline;
+                gap: 10px;
+            }
         </style>
     </head>
 
     <body>
         <div class="container">
-            <h1>
-                <img width="40" height="40" src={{ url_for('static', filename='book.png') }}>
-                Movie Recommendation System
-            </h1>
+            <div class="title-container">
+                <img width="40" height="40" src={{ url_for('static',
+                filename='movie.png') }}>
+                <h1>Movie Recommendation System</h1>
+            </div>
             <form action="/recommend" method="post">
                 <div class="input-container">
                     <label for="movie_title">Enter a movie title:</label>
@@ -127,16 +137,16 @@
                 </div>
                 <button type="submit">Get Recommendations</button>
             </form>
+            {% if recommendations %}
             <div class="recommendations">
-                {% if recommendations %}
                 <h2>Recommended Movies:</h2>
                 <ul>
                     {% for movie in recommendations %}
                     <li>{{ movie }}</li>
                     {% endfor %}
                 </ul>
-                {% endif %}
             </div>
+            {% endif %}
             <div class="explanation">
                 {% if explanation %}
                 <h2>Explanation:</h2>
